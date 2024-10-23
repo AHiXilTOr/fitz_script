@@ -116,7 +116,7 @@ def save_structure(output_path, structure):
         print(f"Контент успешно сохранена в '{output_path}'.")
 
 json_path = "structure.json"
-pdf_path = "Руководство_Бухгалтерия_для_Узбекистана_ред_3_0.pdf"
+pdf_path = "Руководство.pdf"
 
 structure = load_structure(json_path)
 pages_with_titles = find_pages_for_structure(pdf_path, structure)
