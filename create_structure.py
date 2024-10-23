@@ -1,5 +1,6 @@
 import fitz
 import json
+import re
 
 def initialize_structure():
     return {}
@@ -34,9 +35,13 @@ def extract_text_from_pdf(pdf_path):
     for level, title, page in toc:
         if level == 1:
             if title.startswith("Глава"):
-                was_chapter = True
-                current_chapter = title.split()[-1]
+                match = re.match(r'Глава\s*(\d+)', title)
+
+                if match:
+                    was_chapter = True
+                    current_chapter = match.group(1)
                 continue
+            
             if was_chapter:
                 add_chapter(structure, title, current_chapter)
         
