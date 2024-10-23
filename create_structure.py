@@ -2,7 +2,7 @@ import fitz
 import json
 import re
 
-def initialize_structure():
+def load_structure():
     return {}
 
 def add_chapter(structure, title, chapter_number):
@@ -25,7 +25,7 @@ def extract_text_from_pdf(pdf_path):
         return {}
     
     toc = doc.get_toc()
-    structure = initialize_structure()
+    structure = load_structure()
 
     current_chapter = None
     current_section = None
@@ -41,7 +41,7 @@ def extract_text_from_pdf(pdf_path):
                     was_chapter = True
                     current_chapter = match.group(1)
                 continue
-            
+
             if was_chapter:
                 add_chapter(structure, title, current_chapter)
         
@@ -60,12 +60,10 @@ def extract_text_from_pdf(pdf_path):
 def save_structure_to_json(structure, output_path):
     with open(output_path, 'w', encoding='utf-8') as json_file:
         json.dump(structure, json_file, ensure_ascii=False, indent=4)
+        print(f"Структура успешно сохранена в '{output_path}'.")
 
-pdf_path = "Руководство_Бухгалтерия_для_Узбекистана_ред_3_0.pdf"
+pdf_path = "Руководство.pdf"
 json_output_path = "structure.json"
 
 pdf_structure = extract_text_from_pdf(pdf_path)
-
 save_structure_to_json(pdf_structure, json_output_path)
-
-print(f"Структура успешно сохранена в '{json_output_path}'.")
